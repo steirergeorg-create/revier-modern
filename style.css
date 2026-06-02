@@ -61,10 +61,10 @@ a { text-decoration: none; color: inherit; }
 
 .btn-ghost {
   background: transparent;
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.35);
+  color: var(--dark);
+  border: 1px solid rgba(0,0,0,0.25);
 }
-.btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+.btn-ghost:hover { border-color: var(--dark); background: rgba(0,0,0,0.04); }
 
 .btn-gold {
   background: var(--gold);
@@ -189,10 +189,7 @@ a { text-decoration: none; color: inherit; }
 .hero-bg {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(to right, rgba(10,10,8,0.88) 40%, rgba(10,10,8,0.3) 100%),
-    linear-gradient(160deg, #1a2818 0%, #2e4028 40%, #4a6040 70%, #6a8060 100%);
-  background-size: cover;
+  background: var(--white);
 }
 
 .hero-content {
@@ -216,7 +213,7 @@ a { text-decoration: none; color: inherit; }
   font-size: clamp(52px, 7vw, 96px);
   font-weight: 400;
   line-height: 1.05;
-  color: var(--white);
+  color: var(--dark);
   margin-bottom: 24px;
 }
 
@@ -224,7 +221,7 @@ a { text-decoration: none; color: inherit; }
   font-size: 16px;
   font-weight: 300;
   line-height: 1.7;
-  color: rgba(255,255,255,0.65);
+  color: var(--gray);
   margin-bottom: 40px;
   max-width: 420px;
 }
@@ -239,7 +236,7 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   gap: 12px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(0,0,0,0.3);
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -248,7 +245,7 @@ a { text-decoration: none; color: inherit; }
 .hero-scroll-line {
   width: 1px;
   height: 48px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent);
 }
 
 /* ── STATS ── */
