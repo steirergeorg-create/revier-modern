@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REVIER — Bauträger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <a href="#" class="nav-logo">REVIER<span class="nav-logo-dot">.</span></a>
+    <nav class="nav-links">
+      <a href="#projekte">Projekte</a>
+      <a href="#unternehmen">Unternehmen</a>
+      <a href="#service">Service</a>
+      <a href="#kontakt" class="nav-cta">Kontakt</a>
+    </nav>
+    <button class="nav-burger" onclick="toggleMenu()" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#projekte" onclick="toggleMenu()">Projekte</a>
+    <a href="#unternehmen" onclick="toggleMenu()">Unternehmen</a>
+    <a href="#service" onclick="toggleMenu()">Service</a>
+    <a href="#kontakt" onclick="toggleMenu()">Kontakt</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-label">Bauträger · Graz · Österreich</p>
+      <h1 class="hero-title">Zuhause<br>ankommen.</h1>
+      <p class="hero-sub">Wir schaffen Lebensräume, die überzeugen.<br>Qualität, die bleibt.</p>
+      <div class="hero-actions">
+        <a href="#projekte" class="btn btn-light">Projekte entdecken</a>
+        <a href="#kontakt" class="btn btn-ghost">Beratung anfragen</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat">
+        <span class="stat-num">48</span>
+        <span class="stat-label">realisierte Projekte</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">320+</span>
+        <span class="stat-label">zufriedene Eigentümer</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">18</span>
+        <span class="stat-label">Jahre Erfahrung</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">4</span>
+        <span class="stat-label">aktive Projekte</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJEKTE -->
+  <section class="section" id="projekte">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Aktuelle Projekte</p>
+        <h2 class="section-title">Wählen Sie<br>Ihr Zuhause.</h2>
+      </div>
+
+      <div class="projects-grid">
+
+        <article class="project-card project-card--featured">
+          <div class="project-img" style="background: linear-gradient(160deg,#2a3a2a 0%,#4a6040 60%,#6a8060 100%);">
+            <span class="project-status project-status--active">Verfügbar</span>
+          </div>
+          <div class="project-body">
+            <p class="project-location">8042 St. Peter · Graz</p>
+            <h3 class="project-name">Nussbaumerstraße 8</h3>
+            <p class="project-desc">7 frei finanzierte Eigentumswohnungen. Wohnfläche 50–120 m² mit 2–5 Zimmern. Gehobene Ausstattung in ruhiger Lage.</p>
+            <div class="project-meta">
+              <span>50–120 m²</span>
+              <span>2–5 Zimmer</span>
+              <span>Ab € 195.000</span>
+            </div>
+            <a href="projekt.html" class="project-link">Zum Projekt →</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-img" style="background: linear-gradient(160deg,#1a2a3a 0%,#2a4060 60%,#3a5080 100%);">
+            <span class="project-status project-status--soon">In Planung</span>
+          </div>
+          <div class="project-body">
+            <p class="project-location">8053 Graz · Mariatrost</p>
+            <h3 class="project-name">Mariatroster Weg</h3>
+            <p class="project-desc">Exklusive Doppelhäuser am Stadtrand. Großzügige Grundstücke, modernes Niedrigenergie-Konzept.</p>
+            <div class="project-meta">
+              <span>120–180 m²</span>
+              <span>4–5 Zimmer</span>
+              <span>Auf Anfrage</span>
+            </div>
+            <a href="#kontakt" class="project-link">Interesse anmelden →</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-img" style="background: linear-gradient(160deg,#2a1a1a 0%,#604030 60%,#806050 100%);">
+            <span class="project-status project-status--done">Fertiggestellt</span>
+          </div>
+          <div class="project-body">
+            <p class="project-location">8010 Graz · Innenstadt</p>
+            <h3 class="project-name">Kreuzgasse Residenz</h3>
+            <p class="project-desc">Stadtnahes Wohnen im sanierten Altbau. Alle Einheiten vergeben. Referenzprojekt für Qualität und Detailliebe.</p>
+            <div class="project-meta">
+              <span>45–95 m²</span>
+              <span>2–3 Zimmer</span>
+              <span>Vollständig vergeben</span>
+            </div>
+            <a href="#" class="project-link project-link--muted">Referenz ansehen →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="unternehmen">
+    <div class="about-visual">
+      <div class="about-img-stack">
+        <div class="about-img about-img--back" style="background:linear-gradient(135deg,#c8d8b0,#a0b888);"></div>
+        <div class="about-img about-img--front" style="background:linear-gradient(135deg,#e8e0d0,#c8c0b0);"></div>
+      </div>
+      <div class="about-accent">
+        <span class="about-accent-num">18</span>
+        <span class="about-accent-label">Jahre<br>Erfahrung</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="section-label">Unternehmen</p>
+      <h2 class="section-title">Bauen mit<br>Verantwortung.</h2>
+      <p class="about-body">Als inhabergeführter Bauträger mit Sitz in Graz stehen wir für Projekte, bei denen Qualität keine Kompromisse kennt. Von der Planung bis zur Schlüsselübergabe begleiten wir unsere Kunden persönlich.</p>
+      <p class="about-body">Werner Feischl und sein Team verstehen Wohnen als Lebensqualität — nicht als Produkt.</p>
+      <div class="about-values">
+        <div class="value">
+          <span class="value-icon">◆</span>
+          <div>
+            <strong>Transparenz</strong>
+            <p>Fixpreise, klare Verträge, keine Überraschungen.</p>
+          </div>
+        </div>
+        <div class="value">
+          <span class="value-icon">◆</span>
+          <div>
+            <strong>Nachhaltigkeit</strong>
+            <p>Energieeffiziente Bauweise, hochwertige Materialien.</p>
+          </div>
+        </div>
+        <div class="value">
+          <span class="value-icon">◆</span>
+          <div>
+            <strong>Partnerschaft</strong>
+            <p>Ihr Zuhause ist unser Auftrag — langfristig gedacht.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE -->
+  <section class="section section--light" id="service">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Leistungen</p>
+        <h2 class="section-title">Alles aus<br>einer Hand.</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-item">
+          <div class="service-num">01</div>
+          <h3>Finanzierung</h3>
+          <p>Wir beraten Sie zu Fördermöglichkeiten, Bankfinanzierung und optimaler Strukturierung Ihres Kaufs.</p>
+        </div>
+        <div class="service-item">
+          <div class="service-num">02</div>
+          <h3>Bauträgervertrag</h3>
+          <p>Rechtssicher nach dem Bauträgervertragsgesetz — Ihr Geld ist bis zur Fertigstellung geschützt.</p>
+        </div>
+        <div class="service-item">
+          <div class="service-num">03</div>
+          <h3>Energieausweis</h3>
+          <p>Alle unsere Objekte erfüllen die aktuellen Energiestandards. Transparente Betriebskosten von Anfang an.</p>
+        </div>
+        <div class="service-item">
+          <div class="service-num">04</div>
+          <h3>Mein Revier</h3>
+          <p>Verfolgen Sie den Baufortschritt online. Fotos, News und Dokumente jederzeit abrufbar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="kontakt">
+    <div class="contact-inner">
+      <div class="contact-text">
+        <p class="section-label" style="color:#888;">Kontakt</p>
+        <h2 class="section-title" style="color:#fff;">Sprechen wir<br>miteinander.</h2>
+        <p style="color:#aaa;font-size:15px;line-height:1.7;margin-bottom:32px;">Egal ob erstes Interesse oder konkrete Kaufabsicht — wir nehmen uns Zeit für Sie.</p>
+        <div class="contact-info">
+          <div class="contact-info-row">
+            <span class="ci-label">Adresse</span>
+            <span>Kreuzgasse 4, 8010 Graz</span>
+          </div>
+          <div class="contact-info-row">
+            <span class="ci-label">Telefon</span>
+            <a href="tel:+43316680520">0316 / 680 520</a>
+          </div>
+          <div class="contact-info-row">
+            <span class="ci-label">E-Mail</span>
+            <a href="mailto:info@a-real.at">info@a-real.at</a>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Vorname</label>
+            <input type="text" placeholder="Max" required>
+          </div>
+          <div class="form-group">
+            <label>Nachname</label>
+            <input type="text" placeholder="Mustermann" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-Mail</label>
+          <input type="email" placeholder="max@beispiel.at" required>
+        </div>
+        <div class="form-group">
+          <label>Projekt (optional)</label>
+          <select>
+            <option value="">— Bitte wählen —</option>
+            <option>Nussbaumerstraße 8</option>
+            <option>Mariatroster Weg</option>
+            <option>Allgemeine Anfrage</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nachricht</label>
+          <textarea rows="4" placeholder="Ich interessiere mich für …" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold">Anfrage absenden</button>
+        <div class="form-success" id="formSuccess">Danke! Wir melden uns in Kürze.</div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">REVIER<span style="color:#b8962e;">.</span></span>
+        <p>Bauträger · Graz · Österreich</p>
+      </div>
+      <div class="footer-links">
+        <a href="#projekte">Projekte</a>
+        <a href="#unternehmen">Unternehmen</a>
+        <a href="#service">Service</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="login.html">Mein Revier</a>
+      </div>
+      <p class="footer-copy">© 2026 Werner Feischl Bauträger e.U. · FN 292825a</p>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 60);
+    });
+
+    // Mobile menu
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Intersection observer for fade-in
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.stat, .project-card, .service-item, .value').forEach(el => {
+      el.classList.add('fade-up');
+      observer.observe(el);
+    });
+
+    // Form submit
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('formSuccess').style.display = 'block';
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
