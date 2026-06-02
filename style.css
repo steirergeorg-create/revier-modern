@@ -110,7 +110,7 @@ a { text-decoration: none; color: inherit; }
   font-size: 26px;
   font-weight: 400;
   letter-spacing: 0.03em;
-  color: #555;
+  color: #aaa;
 }
 .nav-logo-dot { color: var(--olive); }
 .nav-logo .lg  { color: var(--olive); }
