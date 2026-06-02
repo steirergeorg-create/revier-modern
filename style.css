@@ -111,7 +111,7 @@ a { text-decoration: none; color: inherit; }
   font-family: var(--font-sans);
   font-size: 26px;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: #999;
 }
 .nav-logo-dot { color: var(--olive); font-weight: 400; }
