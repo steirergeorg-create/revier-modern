@@ -112,7 +112,7 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: 0.03em;
   color: #555;
 }
-.nav-logo-dot { color: var(--olive); }
+.nav-logo-dot { color: #aaa; }
 .nav-logo .lg  { color: var(--olive); }
 
 .nav-links {
