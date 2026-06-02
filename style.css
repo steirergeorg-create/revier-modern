@@ -110,7 +110,7 @@ a { text-decoration: none; color: inherit; }
 .nav-logo-text {
   font-family: var(--font-sans);
   font-size: 26px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.02em;
   color: #999;
 }
