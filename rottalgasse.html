@@ -851,16 +851,26 @@
     });
     function openLightbox(index) {
       currentIndex = index;
+      const lb = document.getElementById('lightbox');
       document.getElementById('lightboxImg').src = slides[index].src;
       document.getElementById('lightboxCaption').textContent = slides[index].caption;
-      document.getElementById('lightbox').classList.add('open');
+      lb.classList.add('open');
       document.body.style.overflow = 'hidden';
+      if (lb.requestFullscreen) lb.requestFullscreen();
+      else if (lb.webkitRequestFullscreen) lb.webkitRequestFullscreen();
     }
     function closeLightbox(e) {
       if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
       document.getElementById('lightbox').classList.remove('open');
       document.body.style.overflow = '';
+      if (document.fullscreenElement) document.exitFullscreen();
     }
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
     function changeSlide(dir) {
       currentIndex = (currentIndex + dir + slides.length) % slides.length;
       document.getElementById('lightboxImg').src = slides[currentIndex].src;

@@ -204,16 +204,23 @@
     /* Lightbox */
     .lightbox {
       display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.92); z-index: 999;
+      background: #000; z-index: 9999;
       align-items: center; justify-content: center;
     }
     .lightbox.open { display: flex; }
-    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
-    .lightbox-close {
-      position: fixed; top: 24px; right: 32px;
-      color: rgba(255,255,255,0.7); font-size: 32px;
-      background: none; border: none; cursor: pointer;
+    .lightbox img {
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
     }
+    .lightbox-close {
+      position: fixed; top: 20px; right: 28px;
+      color: rgba(255,255,255,0.8); font-size: 36px;
+      background: none; border: none; cursor: pointer;
+      z-index: 10000;
+      line-height: 1;
+    }
+    .lightbox-close:hover { color: #fff; }
 
     @media (max-width: 900px) {
       .wohnung-hero { padding: 100px 24px 40px; }
@@ -374,18 +381,32 @@
       e.target.reset();
     }
 
-    // Lightbox
+    // Lightbox Vollbild
     function openLightbox() {
+      const lb = document.getElementById('lightbox');
       document.getElementById('lightboxImg').src = document.getElementById('grundrissImg').src;
-      document.getElementById('lightbox').classList.add('open');
+      lb.classList.add('open');
       document.body.style.overflow = 'hidden';
+      // Echtes Vollbild
+      if (lb.requestFullscreen) lb.requestFullscreen();
+      else if (lb.webkitRequestFullscreen) lb.webkitRequestFullscreen();
     }
     function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
+      const lb = document.getElementById('lightbox');
+      lb.classList.remove('open');
       document.body.style.overflow = '';
+      if (document.fullscreenElement) document.exitFullscreen();
     }
+    // ESC schliesst auch Vollbild
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeLightbox();
+    });
+    // Wenn Vollbild per Browser-ESC verlassen wird
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+      }
     });
 
     // Wohnungsdaten
