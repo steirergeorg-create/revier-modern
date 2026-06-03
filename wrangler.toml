@@ -7,7 +7,7 @@ directory = "."
 
 [[kv_namespaces]]
 binding = "REVIER_KV"
-id = "DEINE_KV_ID_HIER"
+id = "727ca589668d4f3ba91afe2e4519412d"
 
 # Secrets (via: wrangler secret put SESSION_SECRET)
 # SESSION_SECRET = "..."
