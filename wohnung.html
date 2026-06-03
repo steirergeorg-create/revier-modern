@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wohnungsdetails — eigenevier[at]</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .wohnung-hero {
+      background: var(--light);
+      border-bottom: 1px solid var(--border);
+      padding: 120px 48px 56px;
+    }
+    .wohnung-hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 40px;
+    }
+    .wohnung-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: color 0.2s;
+    }
+    .wohnung-back:hover { color: var(--text); }
+    .wohnung-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .wohnung-title {
+      font-family: var(--font-serif);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .wohnung-sub {
+      font-size: 14px;
+      color: var(--gray);
+    }
+    .wohnung-status-wrap { text-align: right; }
+    .wohnung-status {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      margin-bottom: 12px;
+    }
+    .wohnung-preis {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      color: var(--text);
+      display: block;
+    }
+    .wohnung-preis-label {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+    }
+
+    /* Kennzahlen */
+    .wohnung-facts {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+    }
+    .wohnung-facts-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-left: 1px solid var(--border);
+    }
+    .fact-item {
+      padding: 24px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .fact-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      display: block;
+      margin-bottom: 5px;
+    }
+    .fact-value {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* Inhalt */
+    .wohnung-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 48px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* Grundriss */
+    .grundriss-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .grundriss-box-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .grundriss-box img {
+      width: 100%;
+      display: block;
+      cursor: zoom-in;
+      transition: transform 0.3s;
+    }
+    .grundriss-box img:hover { transform: scale(1.02); }
+
+    /* Sidebar */
+    .wohnung-sidebar { display: flex; flex-direction: column; gap: 24px; }
+
+    .info-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+    .info-card-title {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 16px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-row-label { color: var(--gray); }
+    .info-row-value { font-weight: 500; color: var(--text); }
+
+    /* CTA */
+    .cta-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+    }
+    .cta-card h3 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .cta-card p {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .cta-form { display: flex; flex-direction: column; gap: 12px; }
+    .cta-form input, .cta-form textarea {
+      background: var(--light);
+      border: 1px solid var(--border);
+      padding: 11px 14px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--text);
+      outline: none;
+      resize: none;
+      transition: border-color 0.2s;
+    }
+    .cta-form input:focus, .cta-form textarea:focus { border-color: var(--gold); }
+    .cta-form input::placeholder, .cta-form textarea::placeholder { color: #bbb; }
+    .form-success { display:none; color: var(--gold); font-size:13px; text-align:center; padding:10px; border:1px solid var(--gold); }
+
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92); z-index: 999;
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+    .lightbox-close {
+      position: fixed; top: 24px; right: 32px;
+      color: rgba(255,255,255,0.7); font-size: 32px;
+      background: none; border: none; cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .wohnung-hero { padding: 100px 24px 40px; }
+      .wohnung-hero-inner { grid-template-columns: 1fr; }
+      .wohnung-status-wrap { text-align: left; }
+      .wohnung-facts { padding: 0 24px; }
+      .wohnung-facts-grid { grid-template-columns: repeat(2, 1fr); }
+      .wohnung-content { grid-template-columns: 1fr; padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-sub">Bauträger</span>
+      <span class="nav-logo-text">e<span class="lg">ı</span>gene<span class="lg">v</span><span class="lg" style="color:#888;">ı</span>er <span class="nav-logo-dot">[</span><span style="color:#888;font-weight:400;">at</span><span class="nav-logo-dot">]</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#projekte">Projekte</a>
+      <a href="index.html#unternehmen">Unternehmen</a>
+      <a href="index.html#service">Service</a>
+      <a href="#anfrage" class="nav-cta">Anfrage</a>
+    </nav>
+    <button class="nav-burger" onclick="toggleMenu()" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#projekte" onclick="toggleMenu()">Projekte</a>
+    <a href="index.html#unternehmen" onclick="toggleMenu()">Unternehmen</a>
+    <a href="index.html#service" onclick="toggleMenu()">Service</a>
+    <a href="#anfrage" onclick="toggleMenu()">Anfrage</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="wohnung-hero">
+    <div class="wohnung-hero-inner">
+      <div>
+        <a class="wohnung-back" id="backLink" href="#">← Zurück zum Projekt</a>
+        <div class="wohnung-label" id="wLabel">—</div>
+        <h1 class="wohnung-title" id="wTitle">—</h1>
+        <p class="wohnung-sub" id="wSub">—</p>
+      </div>
+      <div class="wohnung-status-wrap">
+        <span class="wohnung-status" id="wStatus">—</span>
+        <span class="wohnung-preis" id="wPreis">—</span>
+        <span class="wohnung-preis-label">Kaufpreis inkl. Tiefgarage</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- KENNZAHLEN -->
+  <div class="wohnung-facts">
+    <div class="wohnung-facts-grid">
+      <div class="fact-item">
+        <span class="fact-label">Wohnfläche</span>
+        <span class="fact-value" id="fFlaeche">—</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-label">Zimmer</span>
+        <span class="fact-value" id="fZimmer">—</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-label">Terrasse / Loggia</span>
+        <span class="fact-value" id="fAussen">—</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-label">Lage</span>
+        <span class="fact-value" id="fLage">—</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-label">Verfügbar</span>
+        <span class="fact-value" id="fVerfuegbar">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INHALT -->
+  <div class="wohnung-content">
+    <!-- Grundriss -->
+    <div>
+      <div class="grundriss-box">
+        <div class="grundriss-box-header">Grundriss</div>
+        <img id="grundrissImg" src="img/geschosse-1.jpg" alt="Grundriss" onclick="openLightbox()">
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="wohnung-sidebar">
+
+      <!-- Details -->
+      <div class="info-card">
+        <div class="info-card-title">Wohnungsdetails</div>
+        <div class="info-row"><span class="info-row-label">Top-Nummer</span><span class="info-row-value" id="dTop">—</span></div>
+        <div class="info-row"><span class="info-row-label">Typ</span><span class="info-row-value" id="dTyp">—</span></div>
+        <div class="info-row"><span class="info-row-label">Stockwerk</span><span class="info-row-value" id="dStockwerk">—</span></div>
+        <div class="info-row"><span class="info-row-label">Wohnfläche</span><span class="info-row-value" id="dFlaeche">—</span></div>
+        <div class="info-row"><span class="info-row-label">Außenfläche</span><span class="info-row-value" id="dAussen">—</span></div>
+        <div class="info-row"><span class="info-row-label">Kaufpreis</span><span class="info-row-value" id="dPreis">—</span></div>
+        <div class="info-row"><span class="info-row-label">Status</span><span class="info-row-value" id="dStatus">—</span></div>
+      </div>
+
+      <!-- Anfrage -->
+      <div class="cta-card" id="anfrage">
+        <h3>Besichtigung anfragen</h3>
+        <p>Interesse an dieser Wohnung? Wir melden uns umgehend bei Ihnen.</p>
+        <form class="cta-form" onsubmit="handleSubmit(event)">
+          <input type="text" placeholder="Ihr Name" required>
+          <input type="email" placeholder="Ihre E-Mail" required>
+          <input type="tel" placeholder="Telefon (optional)">
+          <textarea rows="3" placeholder="Ihre Nachricht…"></textarea>
+          <button type="submit" class="btn btn-gold">Anfrage absenden</button>
+          <div class="form-success" id="formSuccess">Danke! Wir melden uns in Kürze.</div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">eigenevier[at]<span style="color:var(--olive);">.</span></span>
+        <p>Bauträger · Graz · Österreich</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html#projekte">Projekte</a>
+        <a href="index.html#unternehmen">Unternehmen</a>
+        <a href="index.html#service">Service</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="login.html">Mein Revier</a>
+      </div>
+      <p class="footer-copy">© 2026 Werner Feischl Bauträger e.U. · FN 292825a</p>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close">&times;</button>
+    <img id="lightboxImg" src="" alt="Grundriss groß">
+  </div>
+
+  <script>
+    // Nav
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 60);
+    });
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('formSuccess').style.display = 'block';
+      e.target.reset();
+    }
+
+    // Lightbox
+    function openLightbox() {
+      document.getElementById('lightboxImg').src = document.getElementById('grundrissImg').src;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // Wohnungsdaten
+    const PROJEKTE = {
+      schillerplatz: {
+        name: 'Schillerplatz 6',
+        adresse: '8010 Graz · Innenstadt',
+        page: 'schillerplatz.html',
+        wohnungen: [
+          { top:'01', lage:'EG',    typ:'2-Zimmer',  zimmer:2, flaeche:'47 m²', aussen:'8 m² Loggia',   preis:'€ 185.000', status:'frei',  grundriss:'img/geschosse-1.jpg' },
+          { top:'02', lage:'EG',    typ:'3-Zimmer',  zimmer:3, flaeche:'68 m²', aussen:'10 m² Loggia',  preis:'€ 265.000', status:'res',   grundriss:'img/geschosse-1.jpg' },
+          { top:'03', lage:'1. OG', typ:'2-Zimmer',  zimmer:2, flaeche:'50 m²', aussen:'9 m² Loggia',   preis:'€ 198.000', status:'frei',  grundriss:'img/geschosse-2.jpg' },
+          { top:'04', lage:'1. OG', typ:'3-Zimmer',  zimmer:3, flaeche:'72 m²', aussen:'12 m² Loggia',  preis:'€ 278.000', status:'frei',  grundriss:'img/geschosse-2.jpg' },
+          { top:'05', lage:'1. OG', typ:'4-Zimmer',  zimmer:4, flaeche:'90 m²', aussen:'14 m² Loggia',  preis:'€ 345.000', status:'res',   grundriss:'img/geschosse-2.jpg' },
+          { top:'06', lage:'2. OG', typ:'2-Zimmer',  zimmer:2, flaeche:'48 m²', aussen:'9 m² Loggia',   preis:'€ 192.000', status:'frei',  grundriss:'img/geschosse-2.jpg' },
+          { top:'07', lage:'2. OG', typ:'3-Zimmer',  zimmer:3, flaeche:'70 m²', aussen:'11 m² Loggia',  preis:'€ 272.000', status:'frei',  grundriss:'img/geschosse-2.jpg' },
+          { top:'08', lage:'2. OG', typ:'4-Zimmer',  zimmer:4, flaeche:'88 m²', aussen:'13 m² Loggia',  preis:'€ 338.000', status:'verk',  grundriss:'img/geschosse-2.jpg' },
+          { top:'09', lage:'3. OG', typ:'3-Zimmer',  zimmer:3, flaeche:'75 m²', aussen:'12 m² Loggia',  preis:'€ 292.000', status:'frei',  grundriss:'img/geschosse-2.jpg' },
+          { top:'10', lage:'3. OG', typ:'4-Zimmer',  zimmer:4, flaeche:'94 m²', aussen:'15 m² Loggia',  preis:'€ 362.000', status:'frei',  grundriss:'img/geschosse-2.jpg' },
+          { top:'11', lage:'DG',    typ:'4-Zimmer',  zimmer:4, flaeche:'102 m²',aussen:'20 m² Terrasse', preis:'€ 418.000', status:'res',   grundriss:'img/geschosse-3.jpg' },
+          { top:'12', lage:'DG',    typ:'Penthouse', zimmer:5, flaeche:'110 m²',aussen:'28 m² Terrasse', preis:'Auf Anfrage',status:'frei',  grundriss:'img/geschosse-3.jpg' },
+        ]
+      },
+      rottalgasse: {
+        name: 'Rottalgasse 12',
+        adresse: '8054 Graz · Straßgang',
+        page: 'rottalgasse.html',
+        wohnungen: [
+          { top:'01', lage:'EG',    typ:'2-Zimmer',  zimmer:2, flaeche:'55 m²', aussen:'22 m² Terrasse', preis:'€ 210.000', status:'frei', grundriss:'img/geschosse-1.jpg' },
+          { top:'02', lage:'EG',    typ:'3-Zimmer',  zimmer:3, flaeche:'78 m²', aussen:'28 m² Terrasse', preis:'€ 298.000', status:'frei', grundriss:'img/geschosse-1.jpg' },
+          { top:'03', lage:'1. OG', typ:'2-Zimmer',  zimmer:2, flaeche:'57 m²', aussen:'10 m² Loggia',   preis:'€ 218.000', status:'plan', grundriss:'img/geschosse-2.jpg' },
+          { top:'04', lage:'1. OG', typ:'3-Zimmer',  zimmer:3, flaeche:'80 m²', aussen:'12 m² Loggia',   preis:'€ 308.000', status:'plan', grundriss:'img/geschosse-2.jpg' },
+          { top:'05', lage:'1. OG', typ:'4-Zimmer',  zimmer:4, flaeche:'98 m²', aussen:'14 m² Loggia',   preis:'€ 375.000', status:'res',  grundriss:'img/geschosse-2.jpg' },
+          { top:'06', lage:'2. OG', typ:'2-Zimmer',  zimmer:2, flaeche:'56 m²', aussen:'10 m² Loggia',   preis:'€ 215.000', status:'plan', grundriss:'img/geschosse-2.jpg' },
+          { top:'07', lage:'2. OG', typ:'3-Zimmer',  zimmer:3, flaeche:'82 m²', aussen:'12 m² Loggia',   preis:'€ 315.000', status:'frei', grundriss:'img/geschosse-2.jpg' },
+          { top:'08', lage:'2. OG', typ:'4-Zimmer',  zimmer:4, flaeche:'100 m²',aussen:'14 m² Loggia',   preis:'€ 382.000', status:'plan', grundriss:'img/geschosse-2.jpg' },
+          { top:'09', lage:'3. OG', typ:'3-Zimmer',  zimmer:3, flaeche:'85 m²', aussen:'13 m² Loggia',   preis:'€ 328.000', status:'frei', grundriss:'img/geschosse-2.jpg' },
+          { top:'10', lage:'3. OG', typ:'4-Zimmer',  zimmer:4, flaeche:'105 m²',aussen:'16 m² Loggia',   preis:'€ 402.000', status:'plan', grundriss:'img/geschosse-2.jpg' },
+          { top:'11', lage:'DG',    typ:'4-Zimmer',  zimmer:4, flaeche:'118 m²',aussen:'24 m² Terrasse', preis:'€ 462.000', status:'frei', grundriss:'img/geschosse-3.jpg' },
+          { top:'12', lage:'DG',    typ:'Penthouse', zimmer:5, flaeche:'130 m²',aussen:'35 m² Terrasse', preis:'Auf Anfrage',status:'frei', grundriss:'img/geschosse-3.jpg' },
+        ]
+      }
+    };
+
+    const STATUS_MAP = {
+      frei: { label: 'Verfügbar',   cls: 'project-status--active' },
+      res:  { label: 'Reserviert',  cls: 'project-status--soon' },
+      verk: { label: 'Verkauft',    cls: 'project-status--done' },
+      plan: { label: 'In Planung',  cls: 'project-status--soon' },
+    };
+
+    // URL params lesen
+    const params = new URLSearchParams(window.location.search);
+    const projektId = params.get('projekt') || 'schillerplatz';
+    const topNr = params.get('top') || '01';
+
+    const projekt = PROJEKTE[projektId];
+    const w = projekt?.wohnungen.find(x => x.top === topNr.padStart(2,'0'));
+
+    if (!w) {
+      document.querySelector('.wohnung-hero').innerHTML = '<div style="padding:40px;text-align:center;color:#999;">Wohnung nicht gefunden.</div>';
+    } else {
+      const s = STATUS_MAP[w.status] || STATUS_MAP.frei;
+
+      document.title = `Top ${w.top} — ${projekt.name} — eigenevier[at]`;
+      document.getElementById('backLink').href = projekt.page;
+      document.getElementById('wLabel').textContent = projekt.name + ' · ' + projekt.adresse;
+      document.getElementById('wTitle').textContent = `Top ${w.top} — ${w.typ}`;
+      document.getElementById('wSub').textContent = `${w.lage} · ${w.flaeche} · ${w.aussen}`;
+
+      const statusEl = document.getElementById('wStatus');
+      statusEl.textContent = s.label;
+      statusEl.className = `wohnung-status project-status ${s.cls}`;
+
+      document.getElementById('wPreis').textContent = w.preis;
+      document.getElementById('fFlaeche').textContent = w.flaeche;
+      document.getElementById('fZimmer').textContent = w.zimmer;
+      document.getElementById('fAussen').textContent = w.aussen;
+      document.getElementById('fLage').textContent = w.lage;
+      document.getElementById('fVerfuegbar').textContent = s.label;
+
+      document.getElementById('dTop').textContent = `Top ${w.top}`;
+      document.getElementById('dTyp').textContent = w.typ;
+      document.getElementById('dStockwerk').textContent = w.lage;
+      document.getElementById('dFlaeche').textContent = w.flaeche;
+      document.getElementById('dAussen').textContent = w.aussen;
+      document.getElementById('dPreis').textContent = w.preis;
+      document.getElementById('dStatus').textContent = s.label;
+
+      document.getElementById('grundrissImg').src = w.grundriss;
+    }
+  </script>
+</body>
+</html>

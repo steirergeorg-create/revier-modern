@@ -162,6 +162,12 @@
     .w-status--verk    { background: #f0f0f0; color: #999; }
     .w-preis { font-weight: 500; }
     .w-preis--anfrage { color: var(--gray); font-style: italic; }
+    .wohnungen-table tbody tr {
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .wohnungen-table tbody tr:hover td { background: #fdf0f6; }
+    .wohnungen-table tbody tr:hover .top-nr { color: var(--gold); }
 
     /* ── Grundrisse ── */
     .grundrisse-section {
@@ -830,6 +836,14 @@
       document.getElementById('formSuccess').style.display = 'block';
       e.target.reset();
     }
+
+    // Klickbare Tabellenzeilen
+    document.querySelectorAll('.wohnungen-table tbody tr').forEach(row => {
+      row.addEventListener('click', () => {
+        const top = row.querySelector('.top-nr').textContent.trim().padStart(2, '0');
+        window.location.href = `wohnung.html?projekt=schillerplatz&top=${top}`;
+      });
+    });
 
     // Lightbox
     let currentIndex = 0;
