@@ -23,6 +23,12 @@ export default {
     if (url.pathname === '/api/admin/user' && request.method === 'POST') {
       return handleCreateUser(request, env);
     }
+    if (url.pathname.startsWith('/api/admin/project/') && request.method === 'GET') {
+      return handleGetProject(request, env, url);
+    }
+    if (url.pathname.startsWith('/api/admin/project/') && request.method === 'POST') {
+      return handleSaveProject(request, env, url);
+    }
 
     // Statische Assets
     return env.ASSETS.fetch(request);
@@ -118,6 +124,26 @@ async function handleCreateUser(request, env) {
   }));
 
   return jsonOk({ ok: true, message: `Benutzer ${email} angelegt.` });
+}
+
+// ── Projekt lesen (Admin) ──
+async function handleGetProject(request, env, url) {
+  const adminKey = request.headers.get('X-Admin-Key');
+  if (adminKey !== env.ADMIN_KEY) return jsonError('Nicht autorisiert.', 403);
+  const projectId = url.pathname.split('/').pop();
+  const project = await env.REVIER_KV.get(`project:${projectId}`, 'json');
+  if (!project) return jsonError('Projekt nicht gefunden.', 404);
+  return jsonOk(project);
+}
+
+// ── Projekt speichern (Admin) ──
+async function handleSaveProject(request, env, url) {
+  const adminKey = request.headers.get('X-Admin-Key');
+  if (adminKey !== env.ADMIN_KEY) return jsonError('Nicht autorisiert.', 403);
+  const projectId = url.pathname.split('/').pop();
+  const data = await request.json();
+  await env.REVIER_KV.put(`project:${projectId}`, JSON.stringify(data));
+  return jsonOk({ ok: true });
 }
 
 // ── Hilfsfunktionen ──
