@@ -104,7 +104,7 @@ a { text-decoration: none; color: inherit; }
   font-weight: 300;
   letter-spacing: 0;
   color: #888;
-  padding-left: 15px;
+  padding-left: 92px;
   margin-bottom: -8px;
 }
 .nav-logo-text {
@@ -313,7 +313,7 @@ a { text-decoration: none; color: inherit; }
 /* ── PROJECTS ── */
 .projects-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: 24px;
   align-items: start;
 }
