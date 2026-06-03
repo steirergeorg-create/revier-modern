@@ -11,7 +11,7 @@
   --gray:    #888880;
   --text:    #444444;
   --border:  #e0e0e0;
-  --olive:   #8ec63f;
+  --olive:   #a8c87a;
   --olive2:  #a0d850;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans:  'Inter', system-ui, sans-serif;
@@ -100,23 +100,25 @@ a { text-decoration: none; color: inherit; }
 }
 .nav-logo-sub {
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 300;
-  letter-spacing: 0.12em;
-  color: rgba(255,255,255,0.6);
+  letter-spacing: 0;
+  color: rgba(255,255,255,0.7);
+  padding-left: 15px;
+  margin-bottom: -8px;
   transition: color 0.3s;
 }
 .nav-logo-text {
   font-family: var(--font-sans);
   font-size: 26px;
-  font-weight: 200;
-  letter-spacing: 0.03em;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   color: rgba(255,255,255,0.9);
   transition: color 0.3s;
 }
-.nav--scrolled .nav-logo-sub { color: #aaa; }
-.nav--scrolled .nav-logo-text { color: #555; }
-.nav-logo-dot { color: var(--olive); transition: color 0.3s; }
+.nav--scrolled .nav-logo-sub { color: #888; }
+.nav--scrolled .nav-logo-text { color: #999; }
+.nav-logo-dot { color: var(--olive); font-weight: 400; transition: color 0.3s; }
 .nav-logo .lg  { color: var(--olive); transition: color 0.3s; }
 
 .nav-links {
