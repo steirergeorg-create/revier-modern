@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mein Revier — Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold:   #e8007d;
+      --olive:  #a8c87a;
+      --text:   #444;
+      --dark:   #3a3a3a;
+      --gray:   #888880;
+      --border: #e0e0e0;
+      --light:  #f7f7f7;
+      --white:  #fff;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+    body {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      color: var(--text);
+      background: var(--light);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .dash-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .dash-logo {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      gap: 0;
+    }
+    .dash-logo-sub {
+      font-size: 10px;
+      font-weight: 300;
+      color: #aaa;
+      padding-left: 13px;
+      margin-bottom: -5px;
+    }
+    .dash-logo-text {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: #999;
+    }
+    .dash-logo-text .lg { color: var(--olive); }
+    .dash-logo-text .dot { color: var(--olive); font-weight: 400; }
+    .dash-logo-text .at { color: #888; font-weight: 400; }
+
+    .dash-header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .dash-user-name {
+      font-size: 13px;
+      color: var(--gray);
+    }
+    .btn-logout {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 7px 16px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: all 0.2s;
+    }
+    .btn-logout:hover { border-color: var(--text); color: var(--text); }
+
+    /* ── Layout ── */
+    .dash-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 48px;
+    }
+
+    /* ── Hero Banner ── */
+    .dash-banner {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 32px 40px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .dash-banner-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .dash-banner-title {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .dash-banner-sub {
+      font-size: 13px;
+      color: var(--gray);
+    }
+    .dash-banner-top {
+      background: var(--light);
+      border: 1px solid var(--border);
+      padding: 16px 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .dash-banner-top-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .dash-banner-top-num {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    /* ── Grid ── */
+    .dash-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .dash-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+    }
+    .dash-card-full {
+      grid-column: 1 / -1;
+    }
+    .dash-card-title {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dash-card-title span { color: var(--olive); font-size: 10px; }
+
+    /* ── Fortschritt ── */
+    .progress-overall {
+      margin-bottom: 28px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .progress-label strong { color: var(--gold); }
+    .progress-bar-bg {
+      height: 6px;
+      background: var(--light);
+      border: 1px solid var(--border);
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--olive);
+      transition: width 1.2s ease;
+    }
+
+    .progress-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .progress-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .progress-step:last-child { border-bottom: none; }
+    .step-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-icon--done { background: var(--olive); color: #fff; }
+    .step-icon--active { background: var(--gold); color: #fff; }
+    .step-icon--open { background: var(--light); border: 1px solid var(--border); color: #ccc; }
+    .step-info { flex: 1; }
+    .step-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .step-name--open { color: #bbb; font-weight: 400; }
+    .step-desc { font-size: 12px; color: var(--gray); }
+    .step-date { font-size: 11px; color: #bbb; margin-top: 2px; flex-shrink: 0; }
+
+    /* ── Updates ── */
+    .updates-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .update-item {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .update-item:last-child { border-bottom: none; }
+    .update-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--olive);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    .update-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 0.06em;
+      margin-bottom: 3px;
+    }
+    .update-text {
+      font-size: 13.5px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Fotos ── */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .photo-item {
+      aspect-ratio: 4/3;
+      background: var(--light);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .photo-item:hover img { transform: scale(1.05); }
+    .photo-date {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      font-size: 10px;
+      padding: 3px 8px;
+      letter-spacing: 0.06em;
+    }
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 12px;
+    }
+
+    /* ── Dokumente ── */
+    .docs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .doc-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .doc-item:last-child { border-bottom: none; }
+    .doc-item:hover { color: var(--gold); }
+    .doc-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--light);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .doc-info { flex: 1; }
+    .doc-name {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .doc-meta { font-size: 11px; color: var(--gray); }
+    .doc-download {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    /* ── Loading ── */
+    .loading {
+      text-align: center;
+      padding: 80px;
+      color: var(--gray);
+      font-size: 13px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .dash-header { padding: 0 20px; }
+      .dash-main { padding: 24px 20px; }
+      .dash-grid { grid-template-columns: 1fr; }
+      .dash-banner { flex-direction: column; align-items: flex-start; }
+      .photos-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="dash-header">
+    <a href="index.html" class="dash-logo">
+      <span class="dash-logo-sub">Bauträger</span>
+      <span class="dash-logo-text">e<span class="lg">ı</span>gene<span class="lg">v</span><span class="lg" style="color:#888;">ı</span>er <span class="dot">[</span><span class="at">at</span><span class="dot">]</span></span>
+    </a>
+    <div class="dash-header-right">
+      <span class="dash-user-name" id="userName">—</span>
+      <button class="btn-logout" onclick="logout()">Abmelden</button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="dash-main" id="dashMain">
+    <div class="loading">Daten werden geladen…</div>
+  </main>
+
+  <script>
+    async function logout() {
+      await fetch('/api/logout');
+      window.location.href = '/login.html';
+    }
+
+    async function loadDashboard() {
+      // Auth prüfen
+      const meRes = await fetch('/api/me');
+      if (!meRes.ok) {
+        window.location.href = '/login.html';
+        return;
+      }
+      const me = await meRes.json();
+      document.getElementById('userName').textContent = me.name;
+
+      // Projektdaten laden
+      const dataRes = await fetch('/api/data');
+      if (!dataRes.ok) {
+        document.getElementById('dashMain').innerHTML = '<div class="loading">Fehler beim Laden der Daten.</div>';
+        return;
+      }
+      const { project } = await dataRes.json();
+
+      renderDashboard(me, project);
+    }
+
+    function renderDashboard(me, p) {
+      const main = document.getElementById('dashMain');
+
+      main.innerHTML = `
+        <!-- Banner -->
+        <div class="dash-banner">
+          <div>
+            <div class="dash-banner-label">Mein Revier</div>
+            <div class="dash-banner-title">${p.name}</div>
+            <div class="dash-banner-sub">${p.address}</div>
+          </div>
+          <div class="dash-banner-top">
+            <span class="dash-banner-top-label">Ihre Wohnung</span>
+            <span class="dash-banner-top-num">Top ${me.top}</span>
+            <div style="font-size:11px;color:var(--gray);margin-top:4px;">${me.unit || ''}</div>
+          </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="dash-grid">
+
+          <!-- Fortschritt -->
+          <div class="dash-card">
+            <div class="dash-card-title">Baufortschritt <span>${p.progress}%</span></div>
+            <div class="progress-overall">
+              <div class="progress-label">
+                <span>Gesamtfortschritt</span>
+                <strong>${p.progress}%</strong>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="progress-steps">
+              ${p.steps.map(s => `
+                <div class="progress-step">
+                  <div class="step-icon step-icon--${s.status}">
+                    ${s.status === 'done' ? '✓' : s.status === 'active' ? '●' : '○'}
+                  </div>
+                  <div class="step-info">
+                    <div class="step-name ${s.status === 'open' ? 'step-name--open' : ''}">${s.name}</div>
+                    <div class="step-desc">${s.desc}</div>
+                  </div>
+                  <div class="step-date">${s.date || ''}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Updates -->
+          <div class="dash-card">
+            <div class="dash-card-title">Neuigkeiten</div>
+            <div class="updates-list">
+              ${p.updates.map(u => `
+                <div class="update-item">
+                  <div class="update-dot"></div>
+                  <div>
+                    <div class="update-date">${u.date}</div>
+                    <div class="update-text">${u.text}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Fotos -->
+          <div class="dash-card dash-card-full">
+            <div class="dash-card-title">Aktuelle Fotos</div>
+            <div class="photos-grid">
+              ${p.photos.length > 0
+                ? p.photos.map(ph => `
+                    <div class="photo-item">
+                      <img src="${ph.url}" alt="${ph.date}" loading="lazy">
+                      <div class="photo-date">${ph.date}</div>
+                    </div>
+                  `).join('')
+                : `<div style="grid-column:1/-1;padding:40px;text-align:center;color:#bbb;font-size:13px;">
+                    Noch keine Fotos verfügbar — wir laden bald aktuelle Baustellenbilder hoch.
+                  </div>`
+              }
+            </div>
+          </div>
+
+          <!-- Dokumente -->
+          <div class="dash-card dash-card-full">
+            <div class="dash-card-title">Dokumente</div>
+            <div class="docs-list">
+              ${p.docs.map(d => `
+                <a class="doc-item" href="${d.url || '#'}" ${d.url ? 'target="_blank"' : ''}>
+                  <div class="doc-icon">PDF</div>
+                  <div class="doc-info">
+                    <div class="doc-name">${d.name}</div>
+                    <div class="doc-meta">${d.date} · ${d.size || 'PDF'}</div>
+                  </div>
+                  <div class="doc-download">${d.url ? 'Download →' : 'Folgt'}</div>
+                </a>
+              `).join('')}
+            </div>
+          </div>
+
+        </div>
+      `;
+
+      // Fortschrittsbalken animieren
+      setTimeout(() => {
+        document.getElementById('progressFill').style.width = p.progress + '%';
+      }, 100);
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mein Revier — Anmelden</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold:   #e8007d;
+      --olive:  #a8c87a;
+      --text:   #444;
+      --gray:   #888;
+      --border: #e0e0e0;
+      --light:  #f7f7f7;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .login-wrap {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    /* Logo */
+    .login-logo {
+      text-align: center;
+      margin-bottom: 40px;
+      text-decoration: none;
+      display: block;
+    }
+    .login-logo-sub {
+      font-size: 11px;
+      font-weight: 300;
+      color: #aaa;
+      letter-spacing: 0;
+      display: block;
+      margin-bottom: -6px;
+      padding-left: 14px;
+    }
+    .login-logo-text {
+      font-family: var(--font-sans);
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: #999;
+    }
+    .login-logo-text .lg { color: var(--olive); }
+    .login-logo-text .dot { color: var(--olive); font-weight: 400; }
+    .login-logo-text .at { color: #888; font-weight: 400; }
+
+    /* Card */
+    .login-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 40px;
+    }
+    .login-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .login-sub {
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    /* Form */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .form-group input {
+      background: var(--light);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 13px 16px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input:focus { border-color: var(--gold); }
+    .form-group input::placeholder { color: #bbb; }
+
+    .btn-login {
+      width: 100%;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      padding: 15px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+    .btn-login:hover { background: #ff2090; }
+    .btn-login:disabled { background: #ccc; cursor: not-allowed; }
+
+    .login-error {
+      display: none;
+      background: #fff0f5;
+      border: 1px solid #ffc0d8;
+      color: var(--gold);
+      font-size: 13px;
+      padding: 12px 16px;
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .login-back {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--gray);
+    }
+    .login-back a {
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+    .login-back a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="login-wrap">
+    <a href="index.html" class="login-logo">
+      <span class="login-logo-sub">Bauträger</span>
+      <span class="login-logo-text">e<span class="lg">ı</span>gene<span class="lg">v</span><span class="lg" style="color:#888;">ı</span>er <span class="dot">[</span><span class="at">at</span><span class="dot">]</span></span>
+    </a>
+
+    <div class="login-card">
+      <h1 class="login-title">Mein Revier</h1>
+      <p class="login-sub">Melden Sie sich an um Ihren Baufortschritt, Dokumente und aktuelle Fotos abzurufen.</p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label>E-Mail</label>
+          <input type="email" id="email" placeholder="ihre@email.at" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Passwort</label>
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-login" id="loginBtn">Anmelden</button>
+        <div class="login-error" id="loginError"></div>
+      </form>
+    </div>
+
+    <div class="login-back">
+      <a href="index.html">← Zurück zur Website</a>
+    </div>
+  </div>
+
+  <script>
+    // Wenn bereits eingeloggt → weiterleiten
+    fetch('/api/me').then(r => {
+      if (r.ok) window.location.href = '/dashboard.html';
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('loginBtn');
+      const errorEl = document.getElementById('loginError');
+      btn.disabled = true;
+      btn.textContent = 'Anmelden…';
+      errorEl.style.display = 'none';
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          window.location.href = '/dashboard.html';
+        } else {
+          errorEl.textContent = data.error || 'Anmeldung fehlgeschlagen.';
+          errorEl.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Anmelden';
+        }
+      } catch {
+        errorEl.textContent = 'Verbindungsfehler. Bitte versuchen Sie es erneut.';
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Anmelden';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,5 +1,15 @@
 name = "revier-modern"
 compatibility_date = "2026-06-02"
+main = "worker.js"
 
 [assets]
 directory = "."
+
+[[kv_namespaces]]
+binding = "REVIER_KV"
+id = "DEINE_KV_ID_HIER"
+
+# Secrets (via: wrangler secret put SESSION_SECRET)
+# SESSION_SECRET = "..."
+# SALT = "..."
+# ADMIN_KEY = "..."
