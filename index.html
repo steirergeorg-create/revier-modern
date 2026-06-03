@@ -57,19 +57,19 @@
   <section class="stats">
     <div class="stats-grid">
       <div class="stat">
-        <span class="stat-num">48</span>
+        <span class="stat-num" data-count="48" data-suffix="">48</span>
         <span class="stat-label">realisierte Projekte</span>
       </div>
       <div class="stat">
-        <span class="stat-num">320+</span>
+        <span class="stat-num" data-count="320" data-suffix="+">320+</span>
         <span class="stat-label">zufriedene Eigentümer</span>
       </div>
       <div class="stat">
-        <span class="stat-num">18</span>
+        <span class="stat-num" data-count="18" data-suffix="">18</span>
         <span class="stat-label">Jahre Erfahrung</span>
       </div>
       <div class="stat">
-        <span class="stat-num">4</span>
+        <span class="stat-num" data-count="4" data-suffix="">4</span>
         <span class="stat-label">aktive Projekte</span>
       </div>
     </div>
@@ -303,6 +303,32 @@
       el.classList.add('fade-up');
       observer.observe(el);
     });
+
+    // Counter animation for stats
+    function animateCounter(el, target, suffix) {
+      let start = 0;
+      const duration = 1400;
+      const step = timestamp => {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(ease * target) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+    const statsObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const el = e.target;
+          const raw = el.dataset.count;
+          const suffix = el.dataset.suffix || '';
+          animateCounter(el, parseInt(raw), suffix);
+          statsObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-num[data-count]').forEach(el => statsObserver.observe(el));
 
     // Form submit
     function handleSubmit(e) {
