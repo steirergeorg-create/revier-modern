@@ -205,16 +205,18 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: #000;
+      background: rgba(0,0,0,0.75);
       z-index: 999;
       align-items: center;
       justify-content: center;
+      padding: 40px;
     }
     .lightbox.open { display: flex; }
     .lightbox-img {
-      width: 100vw;
-      height: 100vh;
+      max-width: 80vw;
+      max-height: 80vh;
       object-fit: contain;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
     }
     .lightbox-caption {
       position: fixed;
@@ -854,21 +856,12 @@
       document.getElementById('lightboxCaption').textContent = slides[index].caption;
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
-      if (lb.requestFullscreen) lb.requestFullscreen();
-      else if (lb.webkitRequestFullscreen) lb.webkitRequestFullscreen();
     }
     function closeLightbox(e) {
       if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
       document.getElementById('lightbox').classList.remove('open');
       document.body.style.overflow = '';
-      if (document.fullscreenElement) document.exitFullscreen();
     }
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement) {
-        document.getElementById('lightbox').classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
     function changeSlide(dir) {
       currentIndex = (currentIndex + dir + slides.length) % slides.length;
       document.getElementById('lightboxImg').src = slides[currentIndex].src;

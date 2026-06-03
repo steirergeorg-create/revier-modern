@@ -204,14 +204,16 @@
     /* Lightbox */
     .lightbox {
       display: none; position: fixed; inset: 0;
-      background: #000; z-index: 9999;
+      background: rgba(0,0,0,0.75); z-index: 9999;
       align-items: center; justify-content: center;
+      padding: 40px;
     }
     .lightbox.open { display: flex; }
     .lightbox img {
-      width: 100vw;
-      height: 100vh;
+      max-width: 80vw;
+      max-height: 80vh;
       object-fit: contain;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
     }
     .lightbox-close {
       position: fixed; top: 20px; right: 28px;
@@ -388,25 +390,13 @@
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
       // Echtes Vollbild
-      if (lb.requestFullscreen) lb.requestFullscreen();
-      else if (lb.webkitRequestFullscreen) lb.webkitRequestFullscreen();
     }
     function closeLightbox() {
-      const lb = document.getElementById('lightbox');
-      lb.classList.remove('open');
+      document.getElementById('lightbox').classList.remove('open');
       document.body.style.overflow = '';
-      if (document.fullscreenElement) document.exitFullscreen();
     }
-    // ESC schliesst auch Vollbild
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeLightbox();
-    });
-    // Wenn Vollbild per Browser-ESC verlassen wird
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement) {
-        document.getElementById('lightbox').classList.remove('open');
-        document.body.style.overflow = '';
-      }
     });
 
     // Wohnungsdaten
