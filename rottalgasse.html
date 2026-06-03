@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rottalgasse 12 — eigenevier[at] Bauträger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Projekt-spezifische Styles ── */
+    .projekt-hero {
+      height: 70vh;
+      min-height: 480px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .projekt-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #1a1a2e 0%, #2a2a4a 40%, #3a3a6a 70%, #5a5a8a 100%);
+    }
+    .projekt-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,20,0.75) 0%, rgba(10,10,20,0.1) 60%);
+    }
+    .projekt-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 48px 56px;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .projekt-back {
+      position: absolute;
+      top: 120px;
+      left: 48px;
+      z-index: 2;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+    .projekt-back:hover { color: #fff; }
+    .projekt-status-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      margin-bottom: 16px;
+    }
+    .projekt-status-badge--soon { background: #4a5a7a; }
+    .projekt-hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .projekt-hero-addr {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Eckdaten ── */
+    .eckdaten {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+    }
+    .eckdaten-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-left: 1px solid var(--border);
+    }
+    .eckdaten-item {
+      padding: 28px 24px;
+      border-right: 1px solid var(--border);
+    }
+    .eckdaten-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .eckdaten-value {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      color: var(--text);
+      line-height: 1;
+    }
+    .eckdaten-sub {
+      font-size: 11px;
+      color: var(--gray);
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* ── Wohnungsübersicht ── */
+    .wohnungen-section {
+      padding: 80px 48px;
+      background: var(--white);
+    }
+    .wohnungen-inner { max-width: 1100px; margin: 0 auto; }
+    .wohnungen-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 40px;
+    }
+    .wohnungen-table th {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      font-weight: 400;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 2px solid var(--border);
+    }
+    .wohnungen-table td {
+      padding: 16px 16px;
+      font-size: 14px;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+    .wohnungen-table tr:hover td { background: var(--light); }
+    .wohnungen-table .top-nr {
+      font-family: var(--font-serif);
+      font-size: 16px;
+    }
+    .w-status {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+    }
+    .w-status--frei  { background: #f0f8e8; color: #5a8a20; }
+    .w-status--res   { background: #fff4e0; color: #c07800; }
+    .w-status--verk  { background: #f0f0f0; color: #999; }
+    .w-status--plan  { background: #eef0f8; color: #5a6a9a; }
+    .w-preis { font-weight: 500; }
+    .w-preis--anfrage { color: var(--gray); font-style: italic; }
+
+    /* ── Grundrisse ── */
+    .grundrisse-section {
+      padding: 80px 48px;
+      background: var(--light);
+    }
+    .grundrisse-inner { max-width: 1100px; margin: 0 auto; }
+    .grundrisse-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .grundriss-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.25s;
+    }
+    .grundriss-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+    .grundriss-img {
+      height: 200px;
+      background: #e4e6f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+    }
+    .grundriss-info {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+    }
+    .grundriss-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .grundriss-meta { font-size: 12px; color: var(--gray); }
+
+    /* ── Ausstattung ── */
+    .ausstattung-section {
+      padding: 80px 48px;
+      background: var(--white);
+    }
+    .ausstattung-inner { max-width: 1100px; margin: 0 auto; }
+    .ausstattung-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 40px;
+    }
+    .ausstattung-item h4 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ausstattung-item ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ausstattung-item li {
+      font-size: 13.5px;
+      color: var(--gray);
+      line-height: 1.5;
+      padding-left: 14px;
+      position: relative;
+    }
+    .ausstattung-item li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      font-size: 6px;
+      color: var(--olive);
+      top: 5px;
+    }
+
+    /* ── Lage ── */
+    .lage-section {
+      padding: 80px 48px;
+      background: var(--light);
+    }
+    .lage-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .lage-map {
+      height: 360px;
+      background: #dddee8;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+    }
+    .lage-text p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--gray);
+      margin-bottom: 16px;
+    }
+    .lage-punkte {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .lage-punkt {
+      display: flex;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .lage-punkt-icon { color: var(--olive); font-size: 8px; margin-top: 4px; flex-shrink: 0; }
+
+    /* ── CTA ── */
+    .projekt-cta {
+      padding: 80px 48px;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+    }
+    .projekt-cta-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .projekt-cta-inner .section-title { margin-bottom: 12px; }
+    .projekt-cta-inner p {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+    .cta-form {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cta-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .cta-form .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .cta-form label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .cta-form input,
+    .cta-form select,
+    .cta-form textarea {
+      background: var(--light);
+      border: 1px solid var(--border);
+      color: var(--dark);
+      padding: 13px 16px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+    .cta-form input:focus,
+    .cta-form select:focus,
+    .cta-form textarea:focus { border-color: var(--gold); }
+    .cta-form input::placeholder,
+    .cta-form textarea::placeholder { color: #bbb; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .projekt-hero-content { padding: 0 24px 40px; }
+      .projekt-back { left: 24px; }
+      .eckdaten { padding: 0 24px; }
+      .eckdaten-grid { grid-template-columns: repeat(2, 1fr); }
+      .wohnungen-section,
+      .grundrisse-section,
+      .ausstattung-section,
+      .lage-section,
+      .projekt-cta { padding: 56px 24px; }
+      .grundrisse-grid { grid-template-columns: 1fr 1fr; }
+      .ausstattung-grid { grid-template-columns: 1fr; }
+      .lage-inner { grid-template-columns: 1fr; }
+      .cta-form .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .grundrisse-grid { grid-template-columns: 1fr; }
+      .eckdaten-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-sub">Bauträger</span>
+      <span class="nav-logo-text">e<span class="lg">ı</span>gene<span class="lg">v</span><span class="lg" style="color:#888;">ı</span>er <span class="nav-logo-dot">[</span><span style="color:#888;font-weight:400;">at</span><span class="nav-logo-dot">]</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#projekte">Projekte</a>
+      <a href="index.html#unternehmen">Unternehmen</a>
+      <a href="index.html#service">Service</a>
+      <a href="#anfrage" class="nav-cta">Anfrage</a>
+    </nav>
+    <button class="nav-burger" onclick="toggleMenu()" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#projekte" onclick="toggleMenu()">Projekte</a>
+    <a href="index.html#unternehmen" onclick="toggleMenu()">Unternehmen</a>
+    <a href="index.html#service" onclick="toggleMenu()">Service</a>
+    <a href="#anfrage" onclick="toggleMenu()">Anfrage</a>
+  </div>
+
+  <!-- BACK LINK -->
+  <a href="index.html#projekte" class="projekt-back">← Alle Projekte</a>
+
+  <!-- HERO -->
+  <section class="projekt-hero">
+    <div class="projekt-hero-bg"></div>
+    <div class="projekt-hero-overlay"></div>
+    <div class="projekt-hero-content">
+      <span class="projekt-status-badge projekt-status-badge--soon">In Planung</span>
+      <h1 class="projekt-hero-title">Rottalgasse 12</h1>
+      <p class="projekt-hero-addr">8054 Graz · Straßgang</p>
+    </div>
+  </section>
+
+  <!-- ECKDATEN -->
+  <div class="eckdaten">
+    <div class="eckdaten-grid">
+      <div class="eckdaten-item">
+        <span class="eckdaten-label">Einheiten</span>
+        <span class="eckdaten-value">12</span>
+        <span class="eckdaten-sub">Eigentumswohnungen</span>
+      </div>
+      <div class="eckdaten-item">
+        <span class="eckdaten-label">Wohnfläche</span>
+        <span class="eckdaten-value">55–130</span>
+        <span class="eckdaten-sub">m²</span>
+      </div>
+      <div class="eckdaten-item">
+        <span class="eckdaten-label">Preis ab</span>
+        <span class="eckdaten-value">€ 210.000</span>
+        <span class="eckdaten-sub">inkl. Tiefgarage</span>
+      </div>
+      <div class="eckdaten-item">
+        <span class="eckdaten-label">Fertigstellung</span>
+        <span class="eckdaten-value">Q1 2028</span>
+        <span class="eckdaten-sub">in Planung</span>
+      </div>
+      <div class="eckdaten-item">
+        <span class="eckdaten-label">Energieausweis</span>
+        <span class="eckdaten-value">A+</span>
+        <span class="eckdaten-sub">Niedrigenergie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WOHNUNGSÜBERSICHT -->
+  <section class="wohnungen-section">
+    <div class="wohnungen-inner">
+      <p class="section-label">Wohnungsübersicht</p>
+      <h2 class="section-title">Alle 12 Einheiten<br>im Überblick.</h2>
+      <table class="wohnungen-table">
+        <thead>
+          <tr>
+            <th>Top</th>
+            <th>Lage</th>
+            <th>Typ</th>
+            <th>Zimmer</th>
+            <th>Fläche</th>
+            <th>Terrasse/Loggia</th>
+            <th>Preis</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="top-nr">01</td>
+            <td>EG</td>
+            <td>2-Zimmer</td>
+            <td>2</td>
+            <td>55 m²</td>
+            <td>22 m² Terrasse</td>
+            <td class="w-preis">€ 210.000</td>
+            <td><span class="w-status w-status--frei">Verfügbar</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">02</td>
+            <td>EG</td>
+            <td>3-Zimmer</td>
+            <td>3</td>
+            <td>78 m²</td>
+            <td>28 m² Terrasse</td>
+            <td class="w-preis">€ 298.000</td>
+            <td><span class="w-status w-status--frei">Verfügbar</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">03</td>
+            <td>1. OG</td>
+            <td>2-Zimmer</td>
+            <td>2</td>
+            <td>57 m²</td>
+            <td>10 m² Loggia</td>
+            <td class="w-preis">€ 218.000</td>
+            <td><span class="w-status w-status--plan">In Planung</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">04</td>
+            <td>1. OG</td>
+            <td>3-Zimmer</td>
+            <td>3</td>
+            <td>80 m²</td>
+            <td>12 m² Loggia</td>
+            <td class="w-preis">€ 308.000</td>
+            <td><span class="w-status w-status--plan">In Planung</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">05</td>
+            <td>1. OG</td>
+            <td>4-Zimmer</td>
+            <td>4</td>
+            <td>98 m²</td>
+            <td>14 m² Loggia</td>
+            <td class="w-preis">€ 375.000</td>
+            <td><span class="w-status w-status--res">Reserviert</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">06</td>
+            <td>2. OG</td>
+            <td>2-Zimmer</td>
+            <td>2</td>
+            <td>56 m²</td>
+            <td>10 m² Loggia</td>
+            <td class="w-preis">€ 215.000</td>
+            <td><span class="w-status w-status--plan">In Planung</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">07</td>
+            <td>2. OG</td>
+            <td>3-Zimmer</td>
+            <td>3</td>
+            <td>82 m²</td>
+            <td>12 m² Loggia</td>
+            <td class="w-preis">€ 315.000</td>
+            <td><span class="w-status w-status--frei">Verfügbar</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">08</td>
+            <td>2. OG</td>
+            <td>4-Zimmer</td>
+            <td>4</td>
+            <td>100 m²</td>
+            <td>14 m² Loggia</td>
+            <td class="w-preis">€ 382.000</td>
+            <td><span class="w-status w-status--plan">In Planung</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">09</td>
+            <td>3. OG</td>
+            <td>3-Zimmer</td>
+            <td>3</td>
+            <td>85 m²</td>
+            <td>13 m² Loggia</td>
+            <td class="w-preis">€ 328.000</td>
+            <td><span class="w-status w-status--frei">Verfügbar</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">10</td>
+            <td>3. OG</td>
+            <td>4-Zimmer</td>
+            <td>4</td>
+            <td>105 m²</td>
+            <td>16 m² Loggia</td>
+            <td class="w-preis">€ 402.000</td>
+            <td><span class="w-status w-status--plan">In Planung</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">11</td>
+            <td>DG</td>
+            <td>4-Zimmer</td>
+            <td>4</td>
+            <td>118 m²</td>
+            <td>24 m² Terrasse</td>
+            <td class="w-preis">€ 462.000</td>
+            <td><span class="w-status w-status--frei">Verfügbar</span></td>
+          </tr>
+          <tr>
+            <td class="top-nr">12</td>
+            <td>DG</td>
+            <td>Penthouse</td>
+            <td>5</td>
+            <td>130 m²</td>
+            <td>35 m² Terrasse</td>
+            <td class="w-preis w-preis--anfrage">Auf Anfrage</td>
+            <td><span class="w-status w-status--frei">Verfügbar</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- GRUNDRISSE -->
+  <section class="grundrisse-section">
+    <div class="grundrisse-inner">
+      <p class="section-label">Grundrisse</p>
+      <h2 class="section-title">Alle Wohnungstypen<br>auf einen Blick.</h2>
+      <div class="grundrisse-grid">
+        <div class="grundriss-card">
+          <div class="grundriss-img">Grundriss folgt</div>
+          <div class="grundriss-info">
+            <div class="grundriss-name">Typ A — 2-Zimmer</div>
+            <div class="grundriss-meta">55–57 m² · Terrasse/Loggia</div>
+          </div>
+        </div>
+        <div class="grundriss-card">
+          <div class="grundriss-img">Grundriss folgt</div>
+          <div class="grundriss-info">
+            <div class="grundriss-name">Typ B — 3-Zimmer</div>
+            <div class="grundriss-meta">78–85 m² · Loggia</div>
+          </div>
+        </div>
+        <div class="grundriss-card">
+          <div class="grundriss-img">Grundriss folgt</div>
+          <div class="grundriss-info">
+            <div class="grundriss-name">Typ C — 4-Zimmer</div>
+            <div class="grundriss-meta">98–105 m² · Loggia</div>
+          </div>
+        </div>
+        <div class="grundriss-card">
+          <div class="grundriss-img">Grundriss folgt</div>
+          <div class="grundriss-info">
+            <div class="grundriss-name">Typ D — DG / Penthouse</div>
+            <div class="grundriss-meta">118–130 m² · Terrasse</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUSSTATTUNG -->
+  <section class="ausstattung-section">
+    <div class="ausstattung-inner">
+      <p class="section-label">Ausstattung</p>
+      <h2 class="section-title">Qualität in<br>jedem Detail.</h2>
+      <div class="ausstattung-grid">
+        <div class="ausstattung-item">
+          <h4>Böden & Wände</h4>
+          <ul>
+            <li>Echtholzparkett in Wohn- und Schlafräumen</li>
+            <li>Großformatiges Feinsteinzeug in Bad und WC</li>
+            <li>Glatte Malerqualität, weiß</li>
+            <li>Individualisierbare Oberflächen auf Anfrage</li>
+          </ul>
+        </div>
+        <div class="ausstattung-item">
+          <h4>Bad & Sanitär</h4>
+          <ul>
+            <li>Markenarmatur (Hansgrohe / Grohe)</li>
+            <li>Bodenebene Dusche mit Glasabtrennung</li>
+            <li>Badewanne ab Typ B</li>
+            <li>Gäste-WC ab Typ C</li>
+          </ul>
+        </div>
+        <div class="ausstattung-item">
+          <h4>Technik & Energie</h4>
+          <ul>
+            <li>Wärmepumpe mit Fußbodenheizung</li>
+            <li>Kontrollierte Wohnraumlüftung</li>
+            <li>Dreifachverglasung, Alu-Holz-Fenster</li>
+            <li>PV-Anlage am Dach, Wallbox je Stellplatz</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAGE -->
+  <section class="lage-section">
+    <div class="lage-inner">
+      <div>
+        <p class="section-label">Lage</p>
+        <h2 class="section-title">Ruhig wohnen,<br>gut verbunden.</h2>
+        <div class="lage-text">
+          <p>Die Rottalgasse liegt im grünen Stadtteil Straßgang — ruhige Wohnlage mit guter Anbindung an das Grazer Zentrum. Supermärkte, Schulen und Parks sind fußläufig erreichbar.</p>
+          <p>Ideal für Familien: großzügige Grundrisse, private Terrassen und ausreichend Grünraum in direkter Umgebung.</p>
+        </div>
+        <div class="lage-punkte">
+          <div class="lage-punkt"><span class="lage-punkt-icon">◆</span><span><strong>15 min</strong> — Grazer Zentrum (Auto)</span></div>
+          <div class="lage-punkt"><span class="lage-punkt-icon">◆</span><span><strong>5 min</strong> — Volksschule Straßgang</span></div>
+          <div class="lage-punkt"><span class="lage-punkt-icon">◆</span><span><strong>3 min</strong> — Supermarkt</span></div>
+          <div class="lage-punkt"><span class="lage-punkt-icon">◆</span><span><strong>8 min</strong> — Straßenbahn Linie 4</span></div>
+        </div>
+      </div>
+      <div class="lage-map">Karte folgt</div>
+    </div>
+  </section>
+
+  <!-- CTA / ANFRAGE -->
+  <section class="projekt-cta" id="anfrage">
+    <div class="projekt-cta-inner">
+      <p class="section-label" style="text-align:center;">Interesse?</p>
+      <h2 class="section-title">Jetzt Interesse<br>anmelden.</h2>
+      <p>Dieses Projekt befindet sich in Planung. Melden Sie Ihr Interesse an — wir informieren Sie als Erste über Details und Verfügbarkeiten.</p>
+      <form class="cta-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Vorname</label>
+            <input type="text" placeholder="Max" required>
+          </div>
+          <div class="form-group">
+            <label>Nachname</label>
+            <input type="text" placeholder="Mustermann" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-Mail</label>
+          <input type="email" placeholder="max@beispiel.at" required>
+        </div>
+        <div class="form-group">
+          <label>Telefon (optional)</label>
+          <input type="tel" placeholder="+43 ...">
+        </div>
+        <div class="form-group">
+          <label>Wohnungstyp Interesse</label>
+          <select>
+            <option value="">— Typ auswählen —</option>
+            <option>Typ A — 2-Zimmer (55–57 m²)</option>
+            <option>Typ B — 3-Zimmer (78–85 m²)</option>
+            <option>Typ C — 4-Zimmer (98–105 m²)</option>
+            <option>Typ D — DG / Penthouse (118–130 m²)</option>
+            <option>Allgemeine Anfrage</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nachricht</label>
+          <textarea rows="4" placeholder="Ich interessiere mich für …"></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold">Interesse anmelden</button>
+        <div class="form-success" id="formSuccess">Danke! Wir melden uns in Kürze.</div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">eigenevier[at]<span style="color:var(--olive);">.</span></span>
+        <p>Bauträger · Graz · Österreich</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html#projekte">Projekte</a>
+        <a href="index.html#unternehmen">Unternehmen</a>
+        <a href="index.html#service">Service</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="login.html">Mein Revier</a>
+      </div>
+      <p class="footer-copy">© 2026 Werner Feischl Bauträger e.U. · FN 292825a</p>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 60);
+    });
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('formSuccess').style.display = 'block';
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
