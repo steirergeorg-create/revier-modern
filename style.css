@@ -85,7 +85,7 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   justify-content: space-between;
   padding: 20px 48px;
-  background: rgba(255,255,255,0.97);
+  background: #ffffff;
   box-shadow: 0 1px 0 var(--border);
   transition: box-shadow 0.3s, padding 0.3s;
 }
