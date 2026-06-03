@@ -189,6 +189,67 @@
       transition: transform 0.4s ease;
     }
     .grundriss-card:hover .grundriss-img img { transform: scale(1.04); }
+    .grundriss-card { cursor: zoom-in; }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 88vh;
+      object-fit: contain;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+    .lightbox-caption {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      color: rgba(255,255,255,0.7);
+      font-size: 32px;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+      background: none;
+      border: none;
+    }
+    .lightbox-close:hover { color: #fff; }
+    .lightbox-prev,
+    .lightbox-next {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,0.6);
+      font-size: 40px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 16px;
+      transition: color 0.2s;
+      line-height: 1;
+    }
+    .lightbox-prev:hover, .lightbox-next:hover { color: #fff; }
+    .lightbox-prev { left: 16px; }
+    .lightbox-next { right: 16px; }
     .grundriss-info {
       padding: 16px 20px;
       border-top: 1px solid var(--border);
@@ -739,6 +800,15 @@
     </div>
   </footer>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-prev" onclick="event.stopPropagation(); changeSlide(-1)">&#8249;</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <button class="lightbox-next" onclick="event.stopPropagation(); changeSlide(1)">&#8250;</button>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
   <script>
     window.addEventListener('scroll', () => {
       document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 60);
@@ -751,6 +821,40 @@
       document.getElementById('formSuccess').style.display = 'block';
       e.target.reset();
     }
+
+    // Lightbox
+    let currentIndex = 0;
+    const slides = [];
+    document.querySelectorAll('.grundriss-card').forEach((card, i) => {
+      const img = card.querySelector('img');
+      const name = card.querySelector('.grundriss-name').textContent;
+      const meta = card.querySelector('.grundriss-meta').textContent;
+      slides.push({ src: img.src, caption: name + ' · ' + meta });
+      card.addEventListener('click', () => openLightbox(i));
+    });
+    function openLightbox(index) {
+      currentIndex = index;
+      document.getElementById('lightboxImg').src = slides[index].src;
+      document.getElementById('lightboxCaption').textContent = slides[index].caption;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(e) {
+      if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function changeSlide(dir) {
+      currentIndex = (currentIndex + dir + slides.length) % slides.length;
+      document.getElementById('lightboxImg').src = slides[currentIndex].src;
+      document.getElementById('lightboxCaption').textContent = slides[currentIndex].caption;
+    }
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox({target: document.getElementById('lightbox')});
+      if (e.key === 'ArrowRight') changeSlide(1);
+      if (e.key === 'ArrowLeft') changeSlide(-1);
+    });
   </script>
 </body>
 </html>
