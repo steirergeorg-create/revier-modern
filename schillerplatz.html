@@ -182,14 +182,15 @@
     .grundriss-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
     .grundriss-img {
       height: 200px;
-      background: #e8e8e8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #bbb;
-      font-size: 13px;
-      letter-spacing: 0.08em;
+      overflow: hidden;
     }
+    .grundriss-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .grundriss-card:hover .grundriss-img img { transform: scale(1.04); }
     .grundriss-info {
       padding: 16px 20px;
       border-top: 1px solid var(--border);
@@ -261,14 +262,13 @@
     }
     .lage-map {
       height: 360px;
-      background: #dde8d8;
       border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #aaa;
-      font-size: 13px;
-      letter-spacing: 0.08em;
+      overflow: hidden;
+    }
+    .lage-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
     .lage-text p {
       font-size: 14px;
@@ -586,28 +586,28 @@
       <h2 class="section-title">Alle Wohnungstypen<br>auf einen Blick.</h2>
       <div class="grundrisse-grid">
         <div class="grundriss-card">
-          <div class="grundriss-img">Grundriss folgt</div>
+          <div class="grundriss-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Grundriss Typ A"></div>
           <div class="grundriss-info">
             <div class="grundriss-name">Typ A — 2-Zimmer</div>
             <div class="grundriss-meta">47–50 m² · Loggia</div>
           </div>
         </div>
         <div class="grundriss-card">
-          <div class="grundriss-img">Grundriss folgt</div>
+          <div class="grundriss-img"><img src="https://images.unsplash.com/photo-1574359411659-15573a27fd0c?w=600&q=80" alt="Grundriss Typ B"></div>
           <div class="grundriss-info">
             <div class="grundriss-name">Typ B — 3-Zimmer</div>
             <div class="grundriss-meta">68–75 m² · Loggia</div>
           </div>
         </div>
         <div class="grundriss-card">
-          <div class="grundriss-img">Grundriss folgt</div>
+          <div class="grundriss-img"><img src="https://images.unsplash.com/photo-1536895058696-a69b1c7ba34f?w=600&q=80" alt="Grundriss Typ C"></div>
           <div class="grundriss-info">
             <div class="grundriss-name">Typ C — 4-Zimmer</div>
             <div class="grundriss-meta">88–94 m² · Loggia</div>
           </div>
         </div>
         <div class="grundriss-card">
-          <div class="grundriss-img">Grundriss folgt</div>
+          <div class="grundriss-img"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=600&q=80" alt="Grundriss Typ D"></div>
           <div class="grundriss-info">
             <div class="grundriss-name">Typ D — DG / Penthouse</div>
             <div class="grundriss-meta">102–110 m² · Terrasse</div>
@@ -671,7 +671,9 @@
           <div class="lage-punkt"><span class="lage-punkt-icon">◆</span><span><strong>2 min</strong> — Straßenbahn</span></div>
         </div>
       </div>
-      <div class="lage-map">Karte folgt</div>
+      <div class="lage-map">
+        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=15.435%2C47.068%2C15.446%2C47.075&layer=mapnik&marker=47.0717%2C15.4405" loading="lazy"></iframe>
+      </div>
     </div>
   </section>
 
