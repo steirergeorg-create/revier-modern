@@ -84,12 +84,13 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 48px;
-  transition: background 0.3s, padding 0.3s, box-shadow 0.3s;
+  padding: 20px 48px;
+  background: rgba(255,255,255,0.97);
+  box-shadow: 0 1px 0 var(--border);
+  transition: box-shadow 0.3s, padding 0.3s;
 }
 .nav--scrolled {
-  background: rgba(255,255,255,0.97);
-  padding: 18px 48px;
+  padding: 14px 48px;
   box-shadow: 0 2px 24px rgba(0,0,0,0.08);
 }
 .nav-logo {
@@ -127,12 +128,10 @@ a { text-decoration: none; color: inherit; }
   font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.75);
+  color: var(--text);
   transition: color 0.2s;
 }
-.nav--scrolled .nav-links a { color: var(--text); }
-.nav--scrolled .nav-links a:hover { color: var(--dark); }
-.nav-links a:hover { color: var(--white); }
+.nav-links a:hover { color: var(--dark); }
 .nav-links .nav-cta {
   background: var(--gold);
   color: var(--white);
@@ -154,9 +153,8 @@ a { text-decoration: none; color: inherit; }
   display: block;
   width: 24px;
   height: 1.5px;
-  background: var(--white);
+  background: var(--dark);
 }
-.nav--scrolled .nav-burger span { background: var(--dark); }
 
 /* Mobile menu */
 .mobile-menu {
