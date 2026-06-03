@@ -25,7 +25,9 @@
     .projekt-hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(10,10,20,0.75) 0%, rgba(10,10,20,0.1) 60%);
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 30%),
+        linear-gradient(to top, rgba(10,10,20,0.75) 0%, rgba(10,10,20,0.1) 60%);
     }
     .projekt-hero-content {
       position: relative;
@@ -399,6 +401,15 @@
     .cta-form textarea:focus { border-color: var(--gold); }
     .cta-form input::placeholder,
     .cta-form textarea::placeholder { color: #bbb; }
+
+    /* Nav über Hero */
+    .nav .nav-logo-sub { color: rgba(255,255,255,0.7); }
+    .nav .nav-logo-text { color: rgba(255,255,255,0.95); }
+    .nav .nav-logo-dot { color: var(--olive); }
+    .nav .nav-burger span { background: #fff; }
+    .nav--scrolled .nav-logo-sub { color: #888; }
+    .nav--scrolled .nav-logo-text { color: #999; }
+    .nav--scrolled .nav-burger span { background: var(--dark); }
 
     /* Responsive */
     @media (max-width: 900px) {
