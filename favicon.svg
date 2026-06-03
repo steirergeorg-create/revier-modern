@@ -1,8 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Hintergrund -->
-  <rect width="32" height="32" fill="#ffffff"/>
-  <!-- "e" -->
-  <text x="3" y="26" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600" fill="#999999">e</text>
-  <!-- grüner Punkt unten rechts -->
-  <circle cx="27" cy="27" r="4" fill="#a8c87a"/>
+  <rect width="32" height="32" fill="#a8c87a"/>
+  <text x="5" y="24" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" fill="#fff">e</text>
+  <text x="17" y="24" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="300" fill="rgba(255,255,255,0.8)">v</text>
 </svg>
