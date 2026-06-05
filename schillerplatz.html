@@ -21,7 +21,7 @@
     .projekt-hero-bg {
       position: absolute;
       inset: 0;
-      background: url('img/Schillerpl 5.jpg') center/cover no-repeat;
+      background: url('img/93834 Aussenansicht I.jpg') center/cover no-repeat;
     }
     .projekt-hero-overlay {
       position: absolute;
@@ -411,12 +411,70 @@
     .cta-form input::placeholder,
     .cta-form textarea::placeholder { color: #bbb; }
 
+    /* ── Fotogalerie ── */
+    .fotos-section {
+      padding: 80px 48px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+    .fotos-inner { max-width: 1100px; margin: 0 auto; }
+    .fotos-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 4px;
+      margin-top: 40px;
+      margin-bottom: 4px;
+    }
+    .foto-main img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      cursor: zoom-in;
+      display: block;
+      transition: opacity 0.2s;
+    }
+    .foto-main img:hover { opacity: 0.92; }
+    .foto-side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+    .foto-side img {
+      width: 100%;
+      height: 207px;
+      object-fit: cover;
+      cursor: zoom-in;
+      display: block;
+      transition: opacity 0.2s;
+    }
+    .foto-side img:hover { opacity: 0.92; }
+    .fotos-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+    .fotos-row img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      cursor: zoom-in;
+      display: block;
+      transition: opacity 0.2s;
+    }
+    .fotos-row img:hover { opacity: 0.92; }
+
     /* Responsive */
     @media (max-width: 900px) {
       .projekt-hero-content { padding: 0 24px 40px; }
       .projekt-back { left: 24px; }
       .eckdaten { padding: 0 24px; }
       .eckdaten-grid { grid-template-columns: repeat(2, 1fr); }
+      .fotos-section { padding: 56px 24px; }
+      .fotos-grid { grid-template-columns: 1fr; }
+      .foto-main img { height: 260px; }
+      .foto-side { grid-template-columns: 1fr 1fr; }
+      .foto-side img { height: 130px; }
+      .fotos-row { grid-template-columns: 1fr 1fr; }
       .wohnungen-section,
       .grundrisse-section,
       .ausstattung-section,
@@ -504,6 +562,31 @@
       </div>
     </div>
   </div>
+
+  <!-- FOTOGALERIE -->
+  <section class="fotos-section">
+    <div class="fotos-inner">
+      <p class="section-label">Fotos</p>
+      <h2 class="section-title">Das Projekt<br>in Bildern.</h2>
+      <div class="fotos-grid" id="fotosGrid">
+        <div class="foto-main">
+          <img src="img/93834 Aussenansicht I.jpg" alt="Außenansicht" onclick="openFoto(0)">
+        </div>
+        <div class="foto-side">
+          <img src="img/93834 Aussenansicht II.jpg" alt="Außenansicht II" onclick="openFoto(1)">
+          <img src="img/luftaufnahme.jpg" alt="Luftaufnahme" onclick="openFoto(2)">
+          <img src="img/93834 Hinterhof.jpg" alt="Hinterhof" onclick="openFoto(3)">
+          <img src="img/93834 Ausblick innen.jpg" alt="Ausblick innen" onclick="openFoto(4)">
+        </div>
+      </div>
+      <div class="fotos-row">
+        <img src="img/Schillerpl 5.jpg" alt="Schillerplatz" onclick="openFoto(5)">
+        <img src="img/Schillerpl 4.jpg" alt="Schillerplatz" onclick="openFoto(6)">
+        <img src="img/schillerpl 3.jpg" alt="Schillerplatz" onclick="openFoto(7)">
+        <img src="img/93833 master.jpg" alt="Gebäude" onclick="openFoto(8)">
+      </div>
+    </div>
+  </section>
 
   <!-- WOHNUNGSÜBERSICHT -->
   <section class="wohnungen-section">
@@ -741,6 +824,9 @@
           <div class="lage-punkt"><span class="lage-punkt-icon">◆</span><span><strong>2 min</strong> — Straßenbahn</span></div>
         </div>
       </div>
+      <div class="lage-umgebung" style="margin-bottom:16px;overflow:hidden;border:1px solid var(--border);">
+        <img src="img/lebensmittel_geschaeft.jpg" alt="Umgebung Schillerplatz" style="width:100%;height:180px;object-fit:cover;display:block;">
+      </div>
       <div class="lage-map">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2717.557085113711!2d15.456183476246437!3d47.06853812497852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476e4a8806cdc9e3%3A0xc355e123a60246d!2sSchillerpl.%203%2C%208010%20Graz!5e0!3m2!1sde!2sat!4v1780642148560!5m2!1sde!2sat" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
@@ -845,7 +931,27 @@
       });
     });
 
-    // Lightbox
+    // Foto-Lightbox
+    const fotoSlides = [
+      'img/93834 Aussenansicht I.jpg',
+      'img/93834 Aussenansicht II.jpg',
+      'img/luftaufnahme.jpg',
+      'img/93834 Hinterhof.jpg',
+      'img/93834 Ausblick innen.jpg',
+      'img/Schillerpl 5.jpg',
+      'img/Schillerpl 4.jpg',
+      'img/schillerpl 3.jpg',
+      'img/93833 master.jpg',
+    ];
+    function openFoto(index) {
+      currentIndex = index;
+      document.getElementById('lightboxImg').src = fotoSlides[index];
+      document.getElementById('lightboxCaption').textContent = '';
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Grundriss-Lightbox
     let currentIndex = 0;
     const slides = [];
     document.querySelectorAll('.grundriss-card').forEach((card, i) => {
